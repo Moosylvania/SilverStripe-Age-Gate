@@ -1,0 +1,9 @@
+---
+Name: agegateroutes
+After:
+  - '#rootroutes'
+  - '#coreroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'age-gate//$Action/$ID/$Name': 'Moosylvania\AgeGate\Controllers\AgeGateController'
