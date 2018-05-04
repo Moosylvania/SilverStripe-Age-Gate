@@ -1,7 +1,7 @@
 {
 	"name": "moosylvania/silverstripe-age-gate",
 	"description": "Age Gate module for SilverStripe.",
-	"type": "silverstripe-module",
+	"type": "silverstripe-vendormodule",
 	"keywords": ["silverstripe", "agegate", "age"],
 	"license": "MIT",
 	"version": "1.0.0",
