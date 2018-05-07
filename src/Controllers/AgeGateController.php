@@ -39,12 +39,23 @@ class AgeGateController extends PageController{
      */
     private static $dateFieldFormat = 'MM/dd/yyyy';
 
+    /**
+     * @config
+     */
+    private static $customFormIntro = '';
+
+    /**
+     * @config
+     */
+    private static $customFieldLabel = '';
+
     private static $allowed_actions = [
         'AgeGateForm'
     ];
 
     protected function init()
     {
+        parent::init();
         $age = Cookie::get('moosylvaniaAgeGateOfAge');
         $request = Injector::inst()->get(HTTPRequest::class);
         $session = $request->getSession();
@@ -55,7 +66,6 @@ class AgeGateController extends PageController{
                 return $this->redirect('/');
             }
         }
-        parent::init();
     }
 
     public function Link($action=NULL){
@@ -71,13 +81,21 @@ class AgeGateController extends PageController{
     {
         $timestring = "-".$this->config()->get('yearsOld')." years";
         $t = strtotime($timestring, time());
-
+        $formIntro = '<h1>'._t('MoosylvaniaAgeGate.FORMINTRO', 'Born Before {date}', ['date'=>date($this->config()->get('dateFormat'), $t)]).'</h1>';
+        if($this->config()->get('customFormIntro')){
+            $formIntro = '<h1>'.$this->config()->get('customFormIntro').'</h1>';
+        }
         $fields = new FieldList(
-            LiteralField::create('OfAge', '<h1>Born Before '.date($this->config()->get('dateFormat'), $t).'</h1>')
+            LiteralField::create('OfAge', $formIntro)
         );
 
+        $fieldLabel = _t('MoosylvaniaAgeGate.FIELDLABEL', 'Your Birthdate');
+        if($this->config()->get('customFieldLabel')){
+            $fieldLabel = $this->config()->get('customFieldLabel');
+        }
+
         if($this->config()->get('askForAge')){
-            $fields->push($dateField = DateField::create('birthdate', 'Your Birthdate')
+            $fields->push($dateField = DateField::create('birthdate', $fieldLabel)
                 ->setMaxDate($timestring)
                 ->setHTML5(false)
                 ->setDateFormat($this->config()->get('dateFieldFormat'))
