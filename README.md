@@ -14,13 +14,7 @@ Simple Age Gate module for SilverStripe, ensures that users entering site are 21
 
         composer require moosylvania/silverstripe-age-gate
 
-2. Add the following your sites app config.yml/mysite.yml etc...
-
-        SilverStripe\CMS\Controllers\ContentController:
-          extensions:
-            - Moosylvania\AgeGate\Extensions\AgeGateExtension
-
-3. This will add a route /age-gate to your project and all users will be presented with a yes/no button to validate of age.  If you would like the user to type in their date of birth you can set the config option of 'askForAge'
+2. This will add a route /age-gate to your project and all users will be presented with a yes/no button to validate of age.  If you would like the user to type in their date of birth you can set the config option of 'askForAge'
 
         Moosylvania\AgeGate\Controllers\AgeGateController:
           askForAge: true
@@ -31,14 +25,14 @@ Simple Age Gate module for SilverStripe, ensures that users entering site are 21
           dateFormat: 'm/d/Y'
           dateFieldFormat: 'MM/dd/yyyy'
 
-4. You can set up where you want a user redirected to if they select 'No' (not of age) by adding the following config value to your site -
+3. You can set up where you want a user redirected to if they select 'No' (not of age) by adding the following config value to your site -
 
         Moosylvania\AgeGate\Controllers\AgeGateController:
           notOfAgeRedirect: 'https://moosylvania.com'
 
-5. You can also setup how old someone needs to be to enter your site (default is 21 by editing the setting)
+4. You can also setup how old someone needs to be to enter your site (default is 21 by editing the setting)
 
 Moosylvania\AgeGate\Controllers\AgeGateController:
   yearsOld: 21
 
-6. Run a dev/build?flush=1 and your site will now be agegated.
+5. Run a dev/build?flush=1 and your site will now be agegated.

@@ -60,7 +60,7 @@ class AgeGateController extends PageController{
         $request = Injector::inst()->get(HTTPRequest::class);
         $session = $request->getSession();
         if($age || $session->get('isSearhEngine')){
-            if($session->get('AgeGateBackURL')){
+            if($session->get('AgeGateBackURL') && strpos($session->get('AgeGateBackURL'), '/age-gate') !== 0){
                 return $this->redirect($session->get('AgeGateBackURL'));
             } else {
                 return $this->redirect('/');

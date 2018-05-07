@@ -1,3 +1,10 @@
 ---
-Name: moosylvaniaAgeGate
+Name: MoosylvaniaAgeGate
+After:
+  - requestprocessors
 ---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        Moosylvania\AgeGate\Middlewares\AgeGateMiddleware: %$Moosylvania\AgeGate\Middlewares\AgeGateMiddleware

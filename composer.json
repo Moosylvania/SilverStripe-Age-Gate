@@ -4,7 +4,7 @@
 	"type": "silverstripe-vendormodule",
 	"keywords": ["silverstripe", "agegate", "age"],
 	"license": "MIT",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"authors": [{
 		"name": "Joe Madden",
 		"email": "joe.madden@moosylvania.com"
