@@ -13,9 +13,6 @@ class AgeGateMiddleware implements HTTPMiddleware{
 
     protected function isSearchEngine(HTTPRequest $request){
         $session = $request->getSession();
-		if($request->isPOST()){
-			return true;
-		}
 		$isSearchEngine = $session->get('isSearchEngine');
 		if($isSearchEngine == NULL) {
             $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
@@ -43,17 +40,29 @@ class AgeGateMiddleware implements HTTPMiddleware{
     {
         $age = Cookie::get('moosylvaniaAgeGateOfAge');
         $session = $request->getSession();
+        $isSearchEngine = $this->isSearchEngine($request);
 
-        if($age == NULL && !$this->isSearchEngine($request) && !$request->getURL() == 'age-gate') {
+        if($age == NULL && $request->getURL() != 'age-gate' && !$request->isPOST() && !$request->isAJAX() && !$isSearchEngine) {
             $session->set('AgeGateBackURL', $_SERVER['REQUEST_URI']);
             $url = Director::absoluteBaseURL()."age-gate";
             $urlParts = explode('?', $_SERVER['REQUEST_URI']);
+
             if(count($urlParts)>1){
                 $url .= "?".$urlParts[1];
             }
+
             $response = HTTPResponse::create();
-            $response = $response->redirect($url, 301);
-		} else {
+            $response = $response->redirect($url, 302);
+
+		} else if(($age || $isSearchEngine) && $request->getURL() == 'age-gate'){
+            $session = $request->getSession();
+            $response = HTTPResponse::create();
+            if($session->get('AgeGateBackURL') && strpos($session->get('AgeGateBackURL'), '/age-gate') !== 0){
+                $response = $response->redirect($session->get('AgeGateBackURL'), 302);
+            } else {
+                $response = $response->redirect('/', 302);
+            }
+        } else {
             $response = $delegate($request);
         }
 
