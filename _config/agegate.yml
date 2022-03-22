@@ -7,4 +7,4 @@ SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
       Middlewares:
-        AgeGateMiddleware: %$Moosylvania\AgeGate\Middlewares\AgeGateMiddleware
+        AgeGateMiddleware: '%$Moosylvania\AgeGate\Middlewares\AgeGateMiddleware'
